@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Pictures — AFSIS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="icon" href="{{ url_for('static', filename='logo-afsis.png') }}" type="image/png">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-name">Search Pictures</span>
+      </div>
+      <div class="header-actions">
+        <span id="status-pill" class="pill idle">Aguardando</span>
+        <button id="btn-theme" class="theme-toggle" title="Alternar tema claro/escuro" aria-label="Alternar tema">☾</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="intro">
+      <p class="kicker">◆ Imagens de produtos</p>
+      <h1>Busque imagens de produtos <span class="accent">pelo código de barras</span></h1>
+      <p class="lede">
+        A aplicação inicia offline. Escolha a fonte: o ERP WinThor (Oracle)
+        ou um arquivo Excel com os códigos a pesquisar.
+      </p>
+    </section>
+
+    <nav class="tabs">
+      <button class="tab active" data-tab="tab-winthor">01 · Busca WinThor</button>
+      <button class="tab" data-tab="tab-arquivo">02 · Busca por arquivo</button>
+      <button class="tab" data-tab="tab-config">03 · Configurações</button>
+      <button class="tab" data-tab="tab-log">04 · Log</button>
+    </nav>
+
+    <section id="tab-winthor" class="tab-panel active">
+      <p class="hint">
+        Informe a conexão com o banco Oracle do WinThor. A conexão só é feita
+        quando você testar ou buscar — e a senha não é salva em disco.
+      </p>
+      <div class="grid">
+        <label>Host<input id="db-host" type="text" placeholder="ex.: oracle.suaempresa.com.br"></label>
+        <label>Porta<input id="db-port" type="text" placeholder="ex.: 1521"></label>
+        <label>Service<input id="db-service" type="text" placeholder="ex.: WINT"></label>
+        <label>Usuário<input id="db-user" type="text" placeholder="ex.: consulta"></label>
+        <label>Senha<input id="db-password" type="password" placeholder="não é salva em disco"></label>
+      </div>
+      <label class="block">
+        <span>Query utilizada — edite se necessário; deve retornar as colunas
+        <strong>CODPROD</strong>, <strong>DESCRICAO</strong> e <strong>CODAUXILIAR</strong>:</span>
+        <textarea id="db-query" rows="6" spellcheck="false"></textarea>
+      </label>
+      <div class="actions">
+        <button id="btn-query-restore" class="btn ghost">Restaurar query padrão</button>
+        <button id="btn-test" class="btn ghost">Testar conexão</button>
+        <button id="btn-winthor" class="btn primary">Buscar imagens do WinThor →</button>
+      </div>
+    </section>
+
+    <section id="tab-arquivo" class="tab-panel">
+      <p class="hint">
+        Envie um arquivo <strong>.xls</strong> ou <strong>.xlsx</strong> contendo a coluna
+        <strong>CODBARRA</strong> com os códigos de barras (EAN/GTIN) a pesquisar.
+        As imagens são salvas com o próprio código de barras como nome.
+      </p>
+      <div class="actions">
+        <input id="file-input" type="file" accept=".xls,.xlsx">
+        <button id="btn-file" class="btn primary">Processar arquivo →</button>
+      </div>
+    </section>
+
+    <section id="tab-config" class="tab-panel">
+      <label class="block">
+        <span>URLs de API (uma por linha, use <code>{gtin}</code> como placeholder):</span>
+        <textarea id="api-urls" rows="5" spellcheck="false"></textarea>
+      </label>
+      <label class="block">
+        <span>Pasta onde as imagens serão salvas (no servidor):</span>
+        <input id="output-dir" type="text">
+      </label>
+      <div class="actions">
+        <button id="btn-restore" class="btn ghost">Restaurar padrão</button>
+        <button id="btn-save" class="btn primary">Salvar configurações</button>
+      </div>
+    </section>
+
+    <section id="tab-log" class="tab-panel">
+      <p class="hint">Registro das operações desta sessão (também gravado em <code>load_images.log</code>).</p>
+      <pre id="log" class="log"></pre>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2>> Execução</h2>
+        <div class="actions">
+          <button id="btn-cancel" class="btn ghost danger" disabled>Cancelar</button>
+          <button id="btn-zip" class="btn ghost" disabled>Baixar imagens (.zip)</button>
+        </div>
+      </div>
+      <div class="progress-track"><div id="progress-bar" class="progress-fill"></div></div>
+      <div id="progress-info" class="progress-info">Nenhuma busca executada ainda.</div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>AFSIS — Tecnologia que conecta a sua operação ao seu ERP</span>
+    <a href="https://afsis.dev.br" target="_blank" rel="noopener">afsis.dev.br</a>
+  </footer>
+
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

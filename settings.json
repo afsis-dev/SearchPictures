@@ -1,0 +1,14 @@
+{
+  "api_urls": [
+    "http://www.eanpictures.com.br:9000/api/gtin/{gtin}",
+    "https://cdn-cosmos.bluesoft.com.br/products/{gtin}"
+  ],
+  "output_dir": "/home/alvaro/AFSIS/SearchPictures/DOWNLOAD_API",
+  "product_query": "SELECT CODPROD, DESCRICAO, CODAUXILIAR\n  FROM PCPRODUT\n WHERE DTEXCLUSAO IS NULL\n   AND CODAUXILIAR IS NOT NULL",
+  "db": {
+    "host": "127.0.0.1",
+    "port": "1521",
+    "service": "PROD",
+    "user": "AFSIS"
+  }
+}

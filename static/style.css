@@ -1,0 +1,405 @@
+/* ==========================================================================
+   LoadPictures — design tokens AFSIS (afsis.dev.br)
+   ========================================================================== */
+:root {
+  --bg: #0a0a0a;
+  --bg-alt: #101012;
+  --surface: rgba(255, 255, 255, 0.04);
+  --header-bg: rgba(10, 10, 10, 0.72);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+
+  --orange: #ff7f2a;
+  --orange-soft: #ffb27a;
+  --orange-dim: rgba(255, 127, 42, 0.14);
+  --orange-glow: rgba(255, 127, 42, 0.32);
+
+  --text: #f5f5f5;
+  --text-dim: #a3a3a3;
+  --text-faint: #6f6f76;
+
+  --font-head: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  --container: 900px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --bg: #f7f6f4;
+  --bg-alt: #efeeeb;
+  --surface: rgba(12, 10, 8, 0.035);
+  --header-bg: rgba(247, 246, 244, 0.8);
+  --border: rgba(12, 10, 8, 0.1);
+  --border-strong: rgba(12, 10, 8, 0.18);
+
+  --orange: #e56c0f;
+  --orange-dim: rgba(240, 105, 15, 0.1);
+  --orange-glow: rgba(240, 105, 15, 0.2);
+
+  --text: #17150f;
+  --text-dim: #56534d;
+  --text-faint: #8b8880;
+
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--orange); color: #140900; }
+
+h1, h2, h3 { font-family: var(--font-head); line-height: 1.12; margin: 0; letter-spacing: -0.015em; }
+
+button:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--header-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+
+.brand { display: flex; align-items: center; gap: 0.6rem; }
+.brand-mark { height: 26px; width: auto; display: block; }
+.brand-name {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+}
+.brand-tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--orange);
+  background: var(--orange-dim);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 2px 10px;
+}
+
+.header-actions { display: flex; align-items: center; gap: 10px; }
+
+.theme-toggle {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+.theme-toggle:hover { border-color: var(--orange); color: var(--orange); }
+
+.pill {
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid var(--border-strong);
+}
+.pill.idle { color: var(--text-faint); }
+.pill.running {
+  color: var(--orange);
+  border-color: var(--orange);
+  background: var(--orange-dim);
+  box-shadow: 0 0 18px -6px var(--orange-glow);
+}
+.pill.done { color: var(--orange-soft); border-color: var(--border-strong); background: var(--surface); }
+
+/* ==========================================================================
+   Layout
+   ========================================================================== */
+main { max-width: var(--container); margin: 0 auto; padding: 40px 16px 48px; }
+
+.intro { margin-bottom: 32px; }
+
+.kicker {
+  margin: 0 0 10px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+.intro h1 { font-size: clamp(1.6rem, 4vw, 2.3rem); font-weight: 700; }
+.intro .accent { color: var(--orange); }
+
+.lede { margin-top: 12px; color: var(--text-dim); max-width: 60ch; }
+
+/* ==========================================================================
+   Abas
+   ========================================================================== */
+.tabs { display: flex; gap: 4px; margin-bottom: -1px; flex-wrap: wrap; }
+
+.tab {
+  padding: 10px 18px;
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  background: none;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: color 0.2s var(--ease);
+}
+.tab:hover { color: var(--text); }
+.tab.active {
+  background: var(--bg-alt);
+  border-color: var(--border);
+  color: var(--orange);
+  font-weight: 500;
+}
+
+.tab-panel {
+  display: none;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 28px;
+}
+.tab-panel.active { display: block; }
+
+.hint { margin-top: 0; color: var(--text-dim); font-size: 0.95rem; }
+.hint strong { color: var(--orange-soft); }
+
+/* ==========================================================================
+   Formulários
+   ========================================================================== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+label { display: flex; flex-direction: column; gap: 6px; font-size: 0.85rem; color: var(--text-dim); }
+label.block { margin-bottom: 18px; }
+
+input[type="text"], input[type="password"], input[type="file"], textarea {
+  padding: 10px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  font: inherit;
+  font-size: 0.9rem;
+  background: var(--surface);
+  color: var(--text);
+  transition: border-color 0.2s var(--ease);
+}
+input:hover, textarea:hover { border-color: var(--text-faint); }
+input:focus, textarea:focus { border-color: var(--orange); outline: none; }
+input::placeholder, textarea::placeholder { color: var(--text-faint); }
+
+textarea { resize: vertical; font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.6; }
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  color: var(--orange-soft);
+  background: var(--orange-dim);
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+
+/* ==========================================================================
+   Botões
+   ========================================================================== */
+.actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.7rem 1.4rem;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform 0.25s var(--ease-spring), background 0.2s var(--ease),
+              border-color 0.2s var(--ease), box-shadow 0.25s var(--ease), color 0.2s var(--ease);
+}
+.btn:hover:not(:disabled) { transform: translateY(-2px); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.btn.primary {
+  background: var(--orange);
+  color: #140900;
+  box-shadow: 0 8px 28px -10px var(--orange-glow);
+}
+.btn.primary:hover:not(:disabled) { box-shadow: 0 12px 32px -8px var(--orange-glow); }
+
+.btn.ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+.btn.ghost:hover:not(:disabled) { border-color: var(--orange); color: var(--orange); }
+
+.btn.ghost.danger { color: var(--text-dim); }
+.btn.ghost.danger:hover:not(:disabled) { border-color: var(--orange); color: var(--orange); }
+
+/* ==========================================================================
+   Painel de execução
+   ========================================================================== */
+.panel {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.panel-header h2 { font-size: 1.05rem; font-weight: 600; }
+
+.progress-track {
+  height: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--orange), var(--orange-soft));
+  border-radius: 999px;
+  box-shadow: 0 0 14px var(--orange-glow);
+  transition: width 0.3s var(--ease);
+}
+
+.progress-info {
+  margin: 10px 0 14px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.log {
+  margin: 0;
+  padding: 14px;
+  height: 260px;
+  overflow-y: auto;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ==========================================================================
+   Toasts
+   ========================================================================== */
+.toasts {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: min(360px, calc(100vw - 32px));
+}
+
+.toast {
+  padding: 12px 16px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border-strong);
+  border-left: 3px solid var(--orange);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 0.88rem;
+  box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease-spring);
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+.toast.success { border-left-color: var(--orange); }
+.toast.error { border-left-color: #e5484d; }
+
+/* ==========================================================================
+   Rodapé
+   ========================================================================== */
+.site-footer {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 20px 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-top: 1px solid var(--border);
+  color: var(--text-faint);
+  font-size: 0.85rem;
+}
+.site-footer a {
+  color: var(--orange);
+  text-decoration: none;
+  font-weight: 600;
+  background-image: linear-gradient(var(--orange), var(--orange));
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 0.3s var(--ease);
+  padding-bottom: 2px;
+}
+.site-footer a:hover { background-size: 100% 1px; }

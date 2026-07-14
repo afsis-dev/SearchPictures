@@ -1,0 +1,6 @@
+flask
+requests
+oracledb
+pandas
+openpyxl
+xlrd
